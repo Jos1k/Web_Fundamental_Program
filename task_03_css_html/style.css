@@ -44,7 +44,6 @@ header>article.account>.search {
     max-width: 230px;
     padding: 7px 10px;
     width: 100%;
-    float: right;
     margin-bottom: 10px;
 }
 ul.list-inline {
@@ -63,6 +62,10 @@ ul.list-inline>li {
     padding: 10px 0px;
     border-top: 1px solid #000000;
     border-bottom: 1px solid #000000;
+}
+#main-nav>ul {
+    margin:0;
+    padding:0;
 }
 #main-nav>.nav-primary-list li>a {
     color: #000000;
