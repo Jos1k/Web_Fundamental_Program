@@ -211,6 +211,13 @@ footer a:hover {
 .navigation-path {
     padding: 1em 0;
 }
-#main-nav-hamburger, #nav-trigger, label[for="nav-trigger"]{
+#main-nav-hamburger, #nav-trigger, label[for="nav-trigger"],.side-nav-small,.main-content>header{
     display: none;
+}
+
+.content-img{
+    display: block; 
+    margin: 0 auto;
+    min-width: 100%;
+    max-width: 100%;
 }
