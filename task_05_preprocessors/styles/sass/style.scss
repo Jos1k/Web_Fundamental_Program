@@ -1,0 +1,71 @@
+$fontAndBorderColor: #000000;
+/*------------------------------------*\
+  COMMON
+\*------------------------------------*/
+html {
+    color: #666;
+    font-family: 'Didact Gothic', sans-serif;
+    font-size: 12px;
+}
+.clearfix {
+    clear: both;
+}
+.uppercase {
+    text-transform: uppercase;
+}
+a, a:hover, a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+.title {
+    color: $fontAndBorderColor;
+    font-family: 'Molle', cursive;
+    font-size: 3em;
+}
+
+/*------------------------------------*\
+CONTENT
+\*------------------------------------*/
+.content {
+    display: flex;
+    min-height: 100px;
+    h3 {
+        font-family: 'Droid Serif', serif;
+        font-weight: 600;
+        color: $fontAndBorderColor;
+        font-size: 15px;
+        margin-bottom: 0;
+    }
+}
+
+/*------------------------------------*\
+FOOTER
+\*------------------------------------*/
+.page-footer {
+    background: rgb(51, 51, 51);
+    color: #FFFFFF;
+    text-align: center;
+    padding: 50px 0 40px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    font-size: 13px;
+    font-weight: 700;
+    a:hover {
+        color: #9b9b9b
+    }
+    .page-footer__list {
+        .delimiter li:not(:last-child)::after {
+            padding: 0 1em;
+        }
+    }
+}
+
+@media screen and (min-width:901px) {
+    @import 'style_large';
+}
+
+@media screen and (max-width:900px) {
+    @import 'style_small';
+}
