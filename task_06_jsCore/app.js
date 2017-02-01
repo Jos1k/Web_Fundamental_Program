@@ -22,7 +22,7 @@ var polishNotation = function(expression, extraOperators){
             throw new Error('Invalid expression! Not supported operators!');
         }
     });
-    if (elementStack.length === 1 && Number.isInteger(elementStack[0])){
+    if (elementStack.length === 1 && !isNaN(elementStack[0])){
         return elementStack.pop();
     }
     throw new Error('Invalid expression! Incorrect count values or operators!')
