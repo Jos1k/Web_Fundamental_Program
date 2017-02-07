@@ -10,16 +10,16 @@ window.addEventListener('load', function () {
     content_area.innerHTML = routes[0].template;
     history.replaceState(routes[0], null, null);
 
-    Array.from(nav_links).forEach(link => {
-        link.addEventListener('click', function (event) {
+    document.getElementById('main-nav').addEventListener('click', function (event) {
+        if (event.target && event.target.className === 'nav-link') {
             route = routes.find(element => {
-                return element.url === event.currentTarget.getAttribute('href');
+                return element.url === event.target.getAttribute('href');
             });
             content_area.innerHTML = route.template;
             history.pushState(route, null, route.url);
             event.preventDefault();
-        });
-    });
+        }
+    })
     window.addEventListener('popstate', function (event) {
         content_area.innerHTML = event.state.template;
     });
