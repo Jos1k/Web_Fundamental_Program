@@ -12,7 +12,7 @@ window.addEventListener('load', function () {
 
     document.getElementById('main-nav').addEventListener('click', function (event) {
         if (event.target && event.target.className === 'nav-link') {
-            route = routes.find(element => {
+            route = routes.find( function(element) {
                 return element.url === event.target.getAttribute('href');
             });
             content_area.innerHTML = route.template;
