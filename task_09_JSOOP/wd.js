@@ -1,7 +1,6 @@
 var wd = {
     createRoot: function (appName) {
         function AppInstanse(name) {
-            const that = this;
             let appRoutes = [];
             const applicationName = appName;
             const content_area = document.querySelector('[wd-root]', applicationName);
@@ -10,13 +9,13 @@ var wd = {
                     return response.text().then(text => {
                         return text;
                     })
-                }).catch(ex => console.log(ex));
+                }).catch(ex => console.error(ex));
             };
 
             this.root = () => { return content_area }
             this.routes = (routeList) => {
                 appRoutes = routeList;
-                return that;
+                return this;
             };
 
             this.navigate = (templateUrl) => {
@@ -26,9 +25,9 @@ var wd = {
                 return getContent(route.templateUrl).then(content => {
                     content_area.innerHTML = content
                     history.pushState(content, null, route.url);
-                }).catch(ex => console.log(ex));
+                }).catch(ex => console.error(ex));
             };
-            return that;
+            return this;
         }
         return new AppInstanse(appName);
     }
