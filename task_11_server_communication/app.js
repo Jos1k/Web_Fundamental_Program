@@ -22,15 +22,32 @@ window.addEventListener('load', () => {
         .component(
             'in-search',
             {
-                template: '<span><input/></span>',
+                template: '<span><input data-list=""/></span>',
                 beforeMount: function (app, element, componentData){
                     const searchInput = element.children[0];
                     searchInput.setAttribute('placeholder',componentData.placeholder);
-                    searchInput.setAttribute('class',componentData.class);
+                    searchInput.setAttribute('class',componentData.class); 
                     
-                    new Awesomplete(searchInput,{
-                        list: ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
-                    });
+                    element.addEventListener('keydown', (event)=>{
+                        if (event.target && event.target.nodeName == 'INPUT'){
+                        const searchText = event.target.value + event.key;
+                        if (!searchText){
+                            awesomplete._list = [];
+                            return;
+                        }
+                        fetch('http://localhost:8083/api/search?query='+searchText,{
+                             method: 'post'
+                         }).then((response) => {
+                             console.log(response);
+                            //awesomplete._list = ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"]
+                         }).catch((error) => {
+                             awesomplete._list = [];
+                             console.error(error);
+                         });
+                        }
+                    }, true);
+                    
+                    const awesomplete = new Awesomplete(searchInput);
                 }
             }
         );
