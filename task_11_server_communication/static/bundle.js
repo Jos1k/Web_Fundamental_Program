@@ -32,7 +32,7 @@ window.addEventListener('load', () => {
                         if (!event.target.value) {
                             return;
                         }
-                        fetch('/api/search?query=' + event.target.value, {
+                        fetch('http://127.0.0.1:8082/api/search?query=' + event.target.value, {
                             method: 'post'
                         }).then((response) => {
                             if (!response.ok) {
