@@ -1,0 +1,14 @@
+{
+  "name": "task_11_server_communication",
+  "version": "1.0.0",
+  "description": "implementation module for server communication",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ihor Hadzera",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
