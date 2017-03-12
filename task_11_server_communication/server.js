@@ -1,19 +1,12 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const dataRepository = require('./custom_modules/dataRepository');
 
-var port = process.env.PORT || 8082;
-var router = express.Router();
-
-var dataStorage = ["Ada", "Java", "JavaScript", "Brainfuck", "LOLCODE", "Node.js", "Ruby on Rails"];
-
-var containsFilter = function (query) {
-    return dataStorage.filter((value) => { 
-        return value.toUpperCase().includes(query.toUpperCase()) 
-    });
-}
+const app = express();
+const port = process.env.PORT || 8082;
+const router = express.Router();
 
 router.post('/search', function (req, res) {
-    res.json(containsFilter(req.query.query));
+    res.json(dataRepository.find(req.query.query));
 });
 
 app.use('/api', router);

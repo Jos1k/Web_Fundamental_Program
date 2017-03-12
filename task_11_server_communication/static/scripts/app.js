@@ -1,12 +1,12 @@
+const superFramework = require('./superFramework');
+
 window.addEventListener('load', () => {
-    const myApp = wd.createRoot('app')
+    const myApp = superFramework.createRoot('app')
         .routes([
             { url: '/', templateUrl: 'views/main.html' },
             { url: '/sign-in', templateUrl: 'views/sign-in.html' }
         ])
-        .component(
-        'in-link',
-        {
+        .component('in-link', {
             template: '<a href=""></a>',
             beforeMount: function (app, element, componentData) {
                 element.innerHTML = componentData.innerHTML;
@@ -17,11 +17,8 @@ window.addEventListener('load', () => {
                     event.preventDefault();
                 });
             }
-        }
-        )
-        .component(
-        'in-search',
-        {
+        })
+        .component('in-search', {
             template: '<span><input data-list=""/></span>',
             beforeMount: function (app, element, componentData) {
                 const searchInput = element.children[0];
@@ -55,8 +52,8 @@ window.addEventListener('load', () => {
                 const awesomplete = new Awesomplete(searchInput,
                     { filter: (text, input) => { return true; } });
             }
-        }
-        );
+        });
+
     myApp.navigate('/');
     window.addEventListener('popstate', event => myApp.root().innerHTML = event.state);
 });
