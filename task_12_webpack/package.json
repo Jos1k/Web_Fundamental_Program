@@ -5,7 +5,9 @@
   "main": "app.js",
   "scripts": {
     "webpack": "webpack",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "eslint static/scripts",
+    "build": "webpack -p"
   },
   "author": "Ihor Hadzera",
   "license": "ISC",
