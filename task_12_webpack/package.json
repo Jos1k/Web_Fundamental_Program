@@ -7,7 +7,7 @@
     "webpack": "webpack",
     "start": "node server.js",
     "test": "eslint static/scripts",
-    "build": "webpack -p"
+    "build": "webpack --env=prod"
   },
   "author": "Ihor Hadzera",
   "license": "ISC",
