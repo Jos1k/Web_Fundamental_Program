@@ -4,8 +4,7 @@
   "description": "implementation module for server communication",
   "main": "app.js",
   "scripts": {
-    "webpack": "webpack",
-    "start": "node server.js",
+    "start": "webpack --env=dev && node server.js",
     "test": "eslint static/scripts",
     "build": "webpack --env=prod"
   },

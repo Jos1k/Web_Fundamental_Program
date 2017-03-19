@@ -3,11 +3,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = () => {
     return {
-        context: __dirname + '../static',
+        context: __dirname + './../static',
         devtool: 'inline-sourcemap',
         entry: './scripts/app.js',
         output: {
-            path: __dirname + '/static',
+            path: __dirname + './../static',
             filename: 'scripts.js'
         },
         plugins: [
