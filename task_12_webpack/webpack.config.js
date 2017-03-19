@@ -1,7 +1,7 @@
-var debug = process.env.NODE_ENV !== 'production';
-const webpack = require('webpack');
+const debug = process.env.NODE_ENV !== 'production';
+const Webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const extractSASS = new ExtractTextPlugin('style.css');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     context: __dirname + '/static',
@@ -11,18 +11,18 @@ module.exports = {
         path: __dirname + '/static',
         filename: 'scripts.js'
     },
-    plugins: [extractSASS],
+    plugins: [
+        new ExtractTextPlugin('style.css'),
+        new HtmlWebpackPlugin({
+            template: 'index.template.ejs',
+            inject: 'body',
+        })
+    ],
     module: {
         rules: [
             {
-                test: /\.js$/,
-                include: [/scripts/],
-                enforce:'pre',
-                use:[{loader:'eslint-loader'}]
-            },
-            {
                 test: /\.scss$/,
-                use: extractSASS.extract({
+                use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: ['css-loader', 'sass-loader']
                 })
@@ -30,3 +30,4 @@ module.exports = {
         ],
     },
 };
+console.log(process.env.NODE_ENV);
