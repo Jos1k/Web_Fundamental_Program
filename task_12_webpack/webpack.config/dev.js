@@ -1,3 +1,4 @@
+const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -7,7 +8,7 @@ module.exports = () => {
         devtool: 'inline-sourcemap',
         entry: './scripts/app.js',
         output: {
-            path: __dirname + './../static',
+            path: __dirname + './../static/',
             filename: 'scripts.js'
         },
         plugins: [
@@ -28,5 +29,9 @@ module.exports = () => {
                 }
             ],
         },
+        devServer: {
+            contentBase: path.resolve(__dirname, './../static/'),
+            port:8083
+        }
     };
 };

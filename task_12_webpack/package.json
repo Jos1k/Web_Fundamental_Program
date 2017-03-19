@@ -4,7 +4,7 @@
   "description": "implementation module for server communication",
   "main": "app.js",
   "scripts": {
-    "start": "webpack --env=dev && node server.js",
+    "start": "node server.js | webpack-dev-server --env=dev",
     "test": "eslint static/scripts",
     "build": "webpack --env=prod"
   },
@@ -23,6 +23,7 @@
     "node-sass": "^4.5.0",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.14.1",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.2"
   }
 }
