@@ -20,7 +20,13 @@
 }
 .main-content_button-area{
   text-align: center;
+  font-size: 2em;
 }
 .main-content_reset-button{
-  font-size: 2em;
+  font-size: inherit;
+  margin-right: 10px;
+}
+
+.main-content_button-area input[type=checkbox] {
+  transform: scale(2.5);
 }
