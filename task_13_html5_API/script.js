@@ -140,4 +140,8 @@ window.onload = function () {
     initGameTable();    
     
     document.onkeydown = actionMove;
+    document.getElementById('reset-button').addEventListener("click",()=>{
+        localStorage.removeItem('gameBoard');
+        resetGameBoard();
+    });
 };

@@ -18,3 +18,9 @@
   border: 5px dotted #b35900;
   background-color: #fff3e6;
 }
+.main-content_button-area{
+  text-align: center;
+}
+.main-content_reset-button{
+  font-size: 2em;
+}
