@@ -2,7 +2,7 @@ const TextRenderMode = require('./TextRenderMode');
 const privateProperties = new WeakMap();
 
 const initBoard = function () {
-    let properties = privateProperties.get(this);
+    const properties = privateProperties.get(this);
     properties.currentRow = 1;
     properties.currentCell = 1;
     properties.player = 'X';
@@ -25,9 +25,9 @@ const resetGameBoard = function () {
 
 const loadGameBoard = function () {
     initBoard.apply(this);
-    let properties = privateProperties.get(this);
-    let gameStorageBoard = JSON.parse(localStorage.getItem('gameBoard'));
-    let lastAct = localStorage.getItem('lastAct');
+    const properties = privateProperties.get(this);
+    const gameStorageBoard = JSON.parse(localStorage.getItem('gameBoard'));
+    const lastAct = localStorage.getItem('lastAct');
     if (lastAct) {
         if (lastAct == 'X') {
             properties.player = 'O';
@@ -53,7 +53,7 @@ const loadGameBoard = function () {
 }
 
 const isWinnerDetermined = function () {
-    let properties = privateProperties.get(this);
+    const properties = privateProperties.get(this);
     if (properties.currentRow == properties.currentCell) {
         for (let i = 0; i < properties.boardSize; i++) {
             if (properties.renderer.getValue(i, i) != properties.player)
@@ -101,7 +101,7 @@ class TicTacToeGame {
     }
 
     moveLeft() {
-        let properties = privateProperties.get(this);
+        const properties = privateProperties.get(this);
         if (properties.currentCell > 0) {
             properties.renderer.moveCursor(
                 properties.currentRow, 
@@ -112,7 +112,7 @@ class TicTacToeGame {
         }
     }
     moveRight() {
-        let properties = privateProperties.get(this);
+        const properties = privateProperties.get(this);
         if (properties.currentCell < properties.boardSize - 1) {
             properties.renderer.moveCursor(
                 properties.currentRow, 
@@ -123,7 +123,7 @@ class TicTacToeGame {
         }
     }
     moveUp() {
-        let properties = privateProperties.get(this);
+        const properties = privateProperties.get(this);
         if (properties.currentRow > 0) {
             properties.renderer.moveCursor(
                 properties.currentRow, 
@@ -134,7 +134,7 @@ class TicTacToeGame {
         }
     }
     moveDown() {
-        let properties = privateProperties.get(this);
+        const properties = privateProperties.get(this);
         if (properties.currentRow < properties.boardSize - 1) {
             properties.renderer.moveCursor(
                 properties.currentRow, 
@@ -145,8 +145,8 @@ class TicTacToeGame {
         }
     }
     act() {
-        let properties = privateProperties.get(this);
-        let currentElement = properties.renderer.getValue(properties.currentRow, properties.currentCell);
+        const properties = privateProperties.get(this);
+        const currentElement = properties.renderer.getValue(properties.currentRow, properties.currentCell);
         if (currentElement != 'X' && currentElement != 'O') {
             properties.renderer.act(properties.currentRow, properties.currentCell, properties.player);
             properties.gameTableAray[properties.currentRow][properties.currentCell] = properties.player;
