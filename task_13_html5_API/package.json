@@ -1,0 +1,15 @@
+{
+  "name": "task_13_html5_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "build":"webpack",
+    "develop":"webpack --watch"
+  },
+  "author": "Ihor Hadzera",
+  "license": "ISC",
+  "devDependencies": {
+      "webpack": "^2.2.1"
+  }
+}

@@ -1,5 +1,7 @@
+const TicTacToeGame = require('./TicTacToeGame');
+
 window.onload = function () {
-    let ticTacToeGame = new TicTacToeGame();
+    let ticTacToeGame = new TicTacToeGame(3);
 
     function actionMove() {
         if (event.keyCode == 32) {
