@@ -1,4 +1,5 @@
 const TextRenderMode = require('./TextRenderMode');
+const CanvasRenderMode = require('./CanvasRenderMode');
 const privateProperties = new WeakMap();
 
 const initBoard = function () {
@@ -7,7 +8,6 @@ const initBoard = function () {
     properties.currentCell = 1;
     properties.player = 'X';
     properties.actionCount = 0;
-    properties.gameTableAray = [];
 
     for (let x = 0; x < properties.boardSize; x++) {
         properties.gameTableAray[x] = [];
@@ -47,8 +47,11 @@ const loadGameBoard = function () {
             })
         });
     }
-    if (!localStorage.getItem('isCanvasMode')) {
+    if (localStorage.getItem('isCanvasMode')) {
         properties.renderer = new TextRenderMode(properties.gameTableAray);
+    }
+    else {
+        properties.renderer = new CanvasRenderMode(properties.gameTableAray);
     }
 }
 
@@ -56,7 +59,7 @@ const isWinnerDetermined = function () {
     const properties = privateProperties.get(this);
     if (properties.currentRow == properties.currentCell) {
         for (let i = 0; i < properties.boardSize; i++) {
-            if (properties.renderer.getValue(i, i) != properties.player)
+            if (properties.gameTableAray[i][i] != properties.player)
                 break;
             if (i == properties.boardSize - 1) {
                 localStorage.clear();
@@ -66,7 +69,7 @@ const isWinnerDetermined = function () {
     }
     if (properties.currentRow + properties.currentCell == properties.boardSize - 1) {
         for (let i = 0; i < properties.boardSize; i++) {
-            if (properties.renderer.getValue(i, (properties.boardSize - 1) - i) != properties.player)
+            if (properties.gameTableAray[i][(properties.boardSize - 1) - i] != properties.player)
                 break;
             if (i == properties.boardSize - 1) {
                 localStorage.clear();
@@ -75,7 +78,7 @@ const isWinnerDetermined = function () {
         }
     }
     for (let i = 0; i < properties.boardSize; i++) {
-        if (properties.renderer.getValue(properties.currentRow, i) != properties.player)
+        if (properties.gameTableAray[properties.currentRow][i] != properties.player)
             break;
         if (i == properties.boardSize - 1) {
             localStorage.clear();
@@ -83,7 +86,7 @@ const isWinnerDetermined = function () {
         }
     }
     for (let i = 0; i < properties.boardSize; i++) {
-        if (properties.renderer.getValue(i, properties.currentCell) != properties.player)
+        if (properties.gameTableAray[i][properties.currentCell] != properties.player)
             break;
         if (i == properties.boardSize - 1) {
             localStorage.clear();
@@ -97,56 +100,37 @@ class TicTacToeGame {
     constructor(boardSize) {
         privateProperties.set(this, {});
         privateProperties.get(this).boardSize = boardSize;
+        privateProperties.get(this).gameTableAray = [];
         loadGameBoard.apply(this);
     }
 
     moveLeft() {
         const properties = privateProperties.get(this);
         if (properties.currentCell > 0) {
-            properties.renderer.moveCursor(
-                properties.currentRow, 
-                properties.currentCell, 
-                properties.currentRow, 
-                --properties.currentCell
-            )
+            properties.renderer.moveCursor(properties.currentRow, --properties.currentCell)
         }
     }
     moveRight() {
         const properties = privateProperties.get(this);
         if (properties.currentCell < properties.boardSize - 1) {
-            properties.renderer.moveCursor(
-                properties.currentRow, 
-                properties.currentCell, 
-                properties.currentRow, 
-                ++properties.currentCell
-            )
+            properties.renderer.moveCursor(properties.currentRow, ++properties.currentCell)
         }
     }
     moveUp() {
         const properties = privateProperties.get(this);
         if (properties.currentRow > 0) {
-            properties.renderer.moveCursor(
-                properties.currentRow, 
-                properties.currentCell, 
-                --properties.currentRow, 
-                properties.currentCell
-            )
+            properties.renderer.moveCursor(--properties.currentRow, properties.currentCell)
         }
     }
     moveDown() {
         const properties = privateProperties.get(this);
         if (properties.currentRow < properties.boardSize - 1) {
-            properties.renderer.moveCursor(
-                properties.currentRow, 
-                properties.currentCell, 
-                ++properties.currentRow, 
-                properties.currentCell
-            )
+            properties.renderer.moveCursor(++properties.currentRow, properties.currentCell)
         }
     }
     act() {
         const properties = privateProperties.get(this);
-        const currentElement = properties.renderer.getValue(properties.currentRow, properties.currentCell);
+        const currentElement = properties.gameTableAray[properties.currentRow][properties.currentCell];
         if (currentElement != 'X' && currentElement != 'O') {
             properties.renderer.act(properties.currentRow, properties.currentCell, properties.player);
             properties.gameTableAray[properties.currentRow][properties.currentCell] = properties.player;

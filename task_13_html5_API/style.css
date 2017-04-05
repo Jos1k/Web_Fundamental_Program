@@ -1,11 +1,12 @@
 .main-content_text-block{
   text-align: center;
 }
-.main-content_game_area {
+.tic-tac-toe_text-render {
   border: 1px solid black; 
   margin: 10vh auto;
+  display:none;
 }
-.main-content_game_area td{
+.tic-tac-toe_text-render td{
   border: 5px solid black;
   width: 10vw;
   height: 10vw;
@@ -14,7 +15,7 @@
   font-weight: bold;
   font-family: cursive;
 }
-.main-content_game_area td.selectedElement{
+.tic-tac-toe_text-render td.selectedElement{
   border: 5px dotted #b35900;
   background-color: #fff3e6;
 }
@@ -29,4 +30,12 @@
 
 .main-content_button-area input[type=checkbox] {
   transform: scale(2.5);
+}
+
+.main-content_game_area {
+  text-align: center;
+}
+
+.tic-tac-toe_canvas-render{
+  background-color: darkgreen;
 }

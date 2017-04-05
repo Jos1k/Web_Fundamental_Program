@@ -15,23 +15,28 @@
         <label for="isCanvasMode">Canvas Mode </label>
         <input type="checkbox" id="isCanvasMode" onclick="setMode(this)">
     </div>-->
-    <table class="main-content_game_area">
-        <tr>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-        </tr>
-    </table>
+    <div class="main-content_game_area">
+        <table class="tic-tac-toe_text-render">
+            <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+        </table>
+        
+        <canvas id="tic-tac-toe_canvas-render" class="tic-tac-toe_canvas-render" width="550" height="550">
+        </canvas>
+    </div>
     <script src="scripts.js"></script>
 </body>
 

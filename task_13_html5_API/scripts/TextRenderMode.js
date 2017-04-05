@@ -4,7 +4,7 @@ class TextRenderMode {
     constructor(gameBoard) {
         privateProperties.set(this, {});
         const properties = privateProperties.get(this);
-        properties.gameTable = document.getElementsByClassName('main-content_game_area')[0].rows;
+        properties.gameTable = document.getElementsByClassName('tic-tac-toe_text-render')[0].rows;
         properties.pivotElemIndex = Math.floor(gameBoard.length / 2);
 
         for (let x = 0; x < gameBoard.length; x++) {
