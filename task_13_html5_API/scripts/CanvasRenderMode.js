@@ -92,7 +92,7 @@ class CanvasRenderMode {
 
     resetBoard() {
         const pivotElemIndex = privateProperties.get(this).pivotElemIndex;
-        moveCursor(pivotElemIndex, pivotElemIndex);
+        this.moveCursor(pivotElemIndex, pivotElemIndex);
     }
 
     moveCursor(newRow, newCell) {
