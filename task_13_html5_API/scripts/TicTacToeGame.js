@@ -4,8 +4,18 @@ const privateProperties = new WeakMap();
 
 const initBoard = function () {
     const properties = privateProperties.get(this);
-    properties.currentRow = 1;
-    properties.currentCell = 1;
+    const lastSelection = JSON.parse(localStorage.getItem('lastSelection'));
+    const pivotElemIndex = Math.floor(properties.gameTableAray.length / 2);
+    if (!lastSelection) {
+        properties.currentRow = pivotElemIndex;
+        properties.currentCell = pivotElemIndex;
+        localStorage.setItem('lastSelection', JSON.stringify({ row: pivotElemIndex, cell: pivotElemIndex }));
+    }
+    else {
+        properties.currentRow = lastSelection.row;
+        properties.currentCell = lastSelection.cell;
+    }
+
     properties.player = 'X';
     properties.actionCount = 0;
 
@@ -18,12 +28,14 @@ const initBoard = function () {
 }
 
 const resetGameBoard = function () {
+    const pivotElemIndex = Math.floor(privateProperties.get(this).gameTableAray.length / 2);
+    localStorage.setItem('lastSelection', JSON.stringify({ row: pivotElemIndex, cell: pivotElemIndex }));
     initBoard.apply(this);
     localStorage.clear();
     privateProperties.get(this).renderer.resetBoard();
 }
 
-const loadGameBoard = function () {
+const loadGameBoard = function (isCanvasFlow) {
     initBoard.apply(this);
     const properties = privateProperties.get(this);
     const gameStorageBoard = JSON.parse(localStorage.getItem('gameBoard'));
@@ -44,14 +56,14 @@ const loadGameBoard = function () {
                 if (innerElem !== '') {
                     properties.actionCount++;
                 }
-            })
+            });
         });
     }
-    if (localStorage.getItem('isCanvasMode')) {
-        properties.renderer = new TextRenderMode(properties.gameTableAray);
+    if (isCanvasFlow) {
+        properties.renderer = new CanvasRenderMode(properties.gameTableAray);
     }
     else {
-        properties.renderer = new CanvasRenderMode(properties.gameTableAray);
+        properties.renderer = new TextRenderMode(properties.gameTableAray);
     }
 }
 
@@ -97,35 +109,39 @@ const isWinnerDetermined = function () {
 };
 
 class TicTacToeGame {
-    constructor(boardSize) {
+    constructor(isCanvasFlow, boardSize) {
         privateProperties.set(this, {});
         privateProperties.get(this).boardSize = boardSize;
         privateProperties.get(this).gameTableAray = [];
-        loadGameBoard.apply(this);
+        loadGameBoard.call(this, isCanvasFlow);
     }
 
     moveLeft() {
         const properties = privateProperties.get(this);
         if (properties.currentCell > 0) {
-            properties.renderer.moveCursor(properties.currentRow, --properties.currentCell)
+            properties.renderer.moveCursor(properties.currentRow, --properties.currentCell);
+            localStorage.setItem('lastSelection', JSON.stringify({ row: properties.currentRow, cell: properties.currentCell }));
         }
     }
     moveRight() {
         const properties = privateProperties.get(this);
         if (properties.currentCell < properties.boardSize - 1) {
-            properties.renderer.moveCursor(properties.currentRow, ++properties.currentCell)
+            properties.renderer.moveCursor(properties.currentRow, ++properties.currentCell);
+            localStorage.setItem('lastSelection', JSON.stringify({ row: properties.currentRow, cell: properties.currentCell }));
         }
     }
     moveUp() {
         const properties = privateProperties.get(this);
         if (properties.currentRow > 0) {
-            properties.renderer.moveCursor(--properties.currentRow, properties.currentCell)
+            properties.renderer.moveCursor(--properties.currentRow, properties.currentCell);
+            localStorage.setItem('lastSelection', JSON.stringify({ row: properties.currentRow, cell: properties.currentCell }));
         }
     }
     moveDown() {
         const properties = privateProperties.get(this);
         if (properties.currentRow < properties.boardSize - 1) {
-            properties.renderer.moveCursor(++properties.currentRow, properties.currentCell)
+            properties.renderer.moveCursor(++properties.currentRow, properties.currentCell);
+            localStorage.setItem('lastSelection', JSON.stringify({ row: properties.currentRow, cell: properties.currentCell }));
         }
     }
     act() {

@@ -6,13 +6,17 @@ class TextRenderMode {
         const properties = privateProperties.get(this);
         properties.gameTable = document.getElementsByClassName('tic-tac-toe_text-render')[0].rows;
         properties.pivotElemIndex = Math.floor(gameBoard.length / 2);
+        const lastSelection = JSON.parse(localStorage.getItem('lastSelection'));
+        properties.currentRow = lastSelection.row;
+        properties.currentCell = lastSelection.cell;
 
         for (let x = 0; x < gameBoard.length; x++) {
             for (let y = 0; y < gameBoard.length; y++) {
                 properties.gameTable[x].cells[y].textContent = gameBoard[x][y] ? gameBoard[x][y] : '-';
+                properties.gameTable[x].cells[y].classList.remove('selectedElement');
             }
         }
-        properties.gameTable[properties.pivotElemIndex].cells[properties.pivotElemIndex].classList.add('selectedElement');
+        properties.gameTable[properties.currentRow].cells[properties.currentCell].classList.add('selectedElement');
     }
 
     resetBoard() {
@@ -26,10 +30,12 @@ class TextRenderMode {
         properties.gameTable[properties.pivotElemIndex].cells[properties.pivotElemIndex].classList.add('selectedElement');
     }
 
-    moveCursor(oldRow, oldCell, newRow, newCell) {
+    moveCursor(newRow, newCell) {
         const properties = privateProperties.get(this);        
-        properties.gameTable[oldRow].cells[oldCell].classList.remove('selectedElement');
+        properties.gameTable[properties.currentRow].cells[properties.currentCell].classList.remove('selectedElement');
         properties.gameTable[newRow].cells[newCell].classList.add('selectedElement');
+        properties.currentRow = newRow;
+        properties.currentCell = newCell;
     }
 
     act(row, cell, player) {

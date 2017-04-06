@@ -2,8 +2,6 @@
   text-align: center;
 }
 .tic-tac-toe_text-render {
-  border: 1px solid black; 
-  margin: 10vh auto;
   display:none;
 }
 .tic-tac-toe_text-render td{
@@ -34,8 +32,10 @@
 
 .main-content_game_area {
   text-align: center;
+  padding: 10vh;
 }
 
 .tic-tac-toe_canvas-render{
   background-color: darkgreen;
+  display:none;
 }
