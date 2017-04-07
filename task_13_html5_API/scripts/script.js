@@ -47,6 +47,7 @@ window.onload = function () {
     document.onkeydown = actionMove;
     document.getElementById('reset-button').addEventListener('click', (element) => {
         ticTacToeGame.resetGameBoard();
+        document.activeElement.blur();
     });
     document.getElementById('isCanvasMode').checked = isCanvasMode;
     document.getElementById('isCanvasMode').addEventListener('change', (element) => {

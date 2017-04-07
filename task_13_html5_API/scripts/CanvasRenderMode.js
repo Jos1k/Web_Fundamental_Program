@@ -5,7 +5,7 @@ const lineSize = 20;
 const drawGameBoard = function () {
     const properties = privateProperties.get(this);
     const ctx = properties.canvasContext;
-    ctx.fillStyle = 'rgb(200, 0, 0)';
+    ctx.fillStyle = 'rgb(224, 201, 71)';
     ctx.save();
 
     for (var i = 0; i < properties.boardSize - 1; i++) {
@@ -25,7 +25,7 @@ const drawGameBoard = function () {
 
 const drawSelection = function (row, cell) {
     var ctx = privateProperties.get(this).canvasContext;
-    ctx.fillStyle = 'rgb(0, 200, 0)';
+    ctx.fillStyle = 'rgb(255, 100, 255)';
     ctx.fillRect(
         celSize * cell + lineSize * cell + (celSize - selectionCellSize) / 2,
         (celSize * row) + lineSize * row + (celSize - selectionCellSize) / 2,
@@ -43,18 +43,22 @@ const drawSelection = function (row, cell) {
 
 const drawAction = function (row, cell, player) {
     let ctx = privateProperties.get(this).canvasContext;
+    ctx.font = selectionCellSize + 'px Sans-serif';
     if (player == 'X') {
-        ctx.fillStyle = 'rgb(0, 200, 100)';
+        ctx.fillStyle = 'rgb(255, 255, 255)';
+        ctx.fillText('X',
+            (celSize * cell + lineSize * cell + (celSize - selectionCellSize) / 2) + 25,
+            (celSize * row + lineSize * row + (celSize - selectionCellSize) / 2) + selectionCellSize - 20
+        );
     }
     else {
-        ctx.fillStyle = 'rgb(100, 200, 0)';
+        ctx.fillStyle = 'rgb(147, 224, 71)';
+        ctx.fillText('O',
+            (celSize * cell + lineSize * cell + (celSize - selectionCellSize) / 2) + 15,
+            (celSize * row + lineSize * row + (celSize - selectionCellSize) / 2) + selectionCellSize - 20
+        );
     }
-    ctx.fillRect(
-        (celSize * cell + lineSize * cell + (celSize - selectionCellSize) / 2) + 20,
-        ((celSize * row) + lineSize * row + + (celSize - selectionCellSize) / 2) + 20,
-        selectionCellSize - 40,
-        selectionCellSize - 40
-    );
+
 }
 
 const loadBoardState = function () {
@@ -83,7 +87,7 @@ const actAction = function (newRow, newCell, player) {
 }
 
 class CanvasRenderMode {
-    constructor(gameBoard,uiObject) {
+    constructor(gameBoard, uiObject) {
         privateProperties.set(this, {});
         const properties = privateProperties.get(this);
         properties.pivotElemIndex = Math.floor(gameBoard.length / 2);
@@ -91,8 +95,8 @@ class CanvasRenderMode {
         properties.boardSize = gameBoard.length;
         properties.gameBoard = gameBoard;
         properties.canvasContext = uiObject.getContext('2d');
-        moveCursorSelection.call( this,  
-            properties.lastSelection.row,  
+        moveCursorSelection.call(this,
+            properties.lastSelection.row,
             properties.lastSelection.cell
         );
     }
