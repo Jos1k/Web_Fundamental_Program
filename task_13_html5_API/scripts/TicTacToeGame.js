@@ -5,7 +5,7 @@ const privateProperties = new WeakMap();
 const initBoard = function () {
     const properties = privateProperties.get(this);
     const lastSelection = JSON.parse(localStorage.getItem('lastSelection'));
-    const pivotElemIndex = Math.floor(properties.gameTableAray.length / 2);
+    const pivotElemIndex = Math.floor(properties.boardSize / 2);
     if (!lastSelection) {
         properties.currentRow = pivotElemIndex;
         properties.currentCell = pivotElemIndex;
@@ -27,16 +27,8 @@ const initBoard = function () {
     }
 }
 
-const resetGameBoard = function () {
-    const pivotElemIndex = Math.floor(privateProperties.get(this).gameTableAray.length / 2);
-    localStorage.setItem('lastSelection', JSON.stringify({ row: pivotElemIndex, cell: pivotElemIndex }));
-    initBoard.apply(this);
-    localStorage.clear();
-    privateProperties.get(this).renderer.resetBoard();
-}
-
-const loadGameBoard = function (isCanvasFlow) {
-    initBoard.apply(this);
+const loadGameBoard = function (isCanvasFlow, uiObject) {
+    initBoard.call(this);
     const properties = privateProperties.get(this);
     const gameStorageBoard = JSON.parse(localStorage.getItem('gameBoard'));
     const lastAct = localStorage.getItem('lastAct');
@@ -60,10 +52,10 @@ const loadGameBoard = function (isCanvasFlow) {
         });
     }
     if (isCanvasFlow) {
-        properties.renderer = new CanvasRenderMode(properties.gameTableAray);
+        properties.renderer = new CanvasRenderMode(properties.gameTableAray, uiObject);
     }
     else {
-        properties.renderer = new TextRenderMode(properties.gameTableAray);
+        properties.renderer = new TextRenderMode(properties.gameTableAray, uiObject);
     }
 }
 
@@ -109,11 +101,11 @@ const isWinnerDetermined = function () {
 };
 
 class TicTacToeGame {
-    constructor(isCanvasFlow, boardSize) {
+    constructor(isCanvasFlow, boardSize, uiObject) {
         privateProperties.set(this, {});
         privateProperties.get(this).boardSize = boardSize;
         privateProperties.get(this).gameTableAray = [];
-        loadGameBoard.call(this, isCanvasFlow);
+        loadGameBoard.call(this, isCanvasFlow, uiObject);
     }
 
     moveLeft() {
@@ -144,6 +136,13 @@ class TicTacToeGame {
             localStorage.setItem('lastSelection', JSON.stringify({ row: properties.currentRow, cell: properties.currentCell }));
         }
     }
+    resetGameBoard () {
+        const pivotElemIndex = Math.floor(privateProperties.get(this).boardSize / 2);
+        localStorage.setItem('lastSelection', JSON.stringify({ row: pivotElemIndex, cell: pivotElemIndex }));
+        initBoard.call(this);
+        localStorage.clear();
+        privateProperties.get(this).renderer.resetBoard();
+    }
     act() {
         const properties = privateProperties.get(this);
         const currentElement = properties.gameTableAray[properties.currentRow][properties.currentCell];
@@ -153,14 +152,14 @@ class TicTacToeGame {
             localStorage.setItem('gameBoard', JSON.stringify(properties.gameTableAray));
             localStorage.setItem('lastAct', properties.player);
             properties.actionCount++;
-            if (isWinnerDetermined.apply(this)) {
+            if (isWinnerDetermined.call(this)) {
                 alert('Player ' + properties.player + ' Wins!');
-                resetGameBoard.apply(this);
+                this.resetGameBoard();
             }
             else {
                 if (properties.actionCount == properties.boardSize * properties.boardSize) {
                     alert('Draw!');
-                    resetGameBoard.apply(this);
+                    this.resetGameBoard();
                     return;
                 }
                 if (properties.player === 'X') {

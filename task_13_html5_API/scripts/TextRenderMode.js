@@ -1,10 +1,10 @@
 const privateProperties = new WeakMap();
 
 class TextRenderMode {
-    constructor(gameBoard) {
+    constructor(gameBoard, uiObject) {
         privateProperties.set(this, {});
         const properties = privateProperties.get(this);
-        properties.gameTable = document.getElementsByClassName('tic-tac-toe_text-render')[0].rows;
+        properties.gameTable = uiObject.rows;
         properties.pivotElemIndex = Math.floor(gameBoard.length / 2);
         const lastSelection = JSON.parse(localStorage.getItem('lastSelection'));
         properties.currentRow = lastSelection.row;
@@ -40,10 +40,6 @@ class TextRenderMode {
 
     act(row, cell, player) {
          privateProperties.get(this).gameTable[row].cells[cell].textContent = player;
-    }
-    
-    getValue(row, cell) {
-        return  privateProperties.get(this).gameTable[row].cells[cell].textContent;
     }
 }
 

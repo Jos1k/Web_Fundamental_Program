@@ -28,7 +28,7 @@ const drawSelection = function (row, cell) {
     ctx.fillStyle = 'rgb(0, 200, 0)';
     ctx.fillRect(
         celSize * cell + lineSize * cell + (celSize - selectionCellSize) / 2,
-        (celSize * row) + lineSize * row + + (celSize - selectionCellSize) / 2,
+        (celSize * row) + lineSize * row + (celSize - selectionCellSize) / 2,
         selectionCellSize,
         selectionCellSize
     );
@@ -42,7 +42,7 @@ const drawSelection = function (row, cell) {
 }
 
 const drawAction = function (row, cell, player) {
-    var ctx = privateProperties.get(this).canvasContext;
+    let ctx = privateProperties.get(this).canvasContext;
     if (player == 'X') {
         ctx.fillStyle = 'rgb(0, 200, 100)';
     }
@@ -59,8 +59,8 @@ const drawAction = function (row, cell, player) {
 
 const loadBoardState = function () {
     const properties = privateProperties.get(this);
-    for (var i = 0; i < properties.gameBoard.length; i++)
-        for (var j = 0; j < properties.gameBoard.length; j++) {
+    for (let i = 0; i < properties.gameBoard.length; i++)
+        for (let j = 0; j < properties.gameBoard.length; j++) {
             if (properties.gameBoard[i][j]) {
                 drawAction.call(this, i, j, properties.gameBoard[i][j]);
             }
@@ -69,10 +69,8 @@ const loadBoardState = function () {
 
 const moveCursorSelection = function (newRow, newCell) {
     const properties = privateProperties.get(this);
-    
     properties.lastSelection.row = newRow;
     properties.lastSelection.cell = newCell;
-    
     properties.canvasContext.clearRect(0, 0, 550, 550);
     drawGameBoard.call(this);
     drawSelection.call(this, newRow, newCell);
@@ -85,18 +83,15 @@ const actAction = function (newRow, newCell, player) {
 }
 
 class CanvasRenderMode {
-    constructor(gameBoard) {
+    constructor(gameBoard,uiObject) {
         privateProperties.set(this, {});
         const properties = privateProperties.get(this);
-        const canvas = document.getElementById('tic-tac-toe_canvas-render');
         properties.pivotElemIndex = Math.floor(gameBoard.length / 2);
         properties.lastSelection = JSON.parse(localStorage.getItem('lastSelection'));
-
         properties.boardSize = gameBoard.length;
         properties.gameBoard = gameBoard;
-        properties.canvasContext = canvas.getContext('2d');
-        moveCursorSelection.call(
-            this,  
+        properties.canvasContext = uiObject.getContext('2d');
+        moveCursorSelection.call( this,  
             properties.lastSelection.row,  
             properties.lastSelection.cell
         );
